@@ -1,9 +1,9 @@
-Technic Launcher (based off SpoutCraft Installer)
+Aegis Launcher (based off Technic Launcer)
 
 The goal of this launcher is to provide a one-click method to switch modpacks and versions in as simple a manner as possible for the end user!
 
 -------------------
 
-Main Technic site is here: http://technicpack.net/
+Main site is here: http://aegisgaming.org/
 
-and the forums are here: http://technicpack.net/forums/
+Get the latest build of this launcher from: http://aegisgaming.org/launcher
