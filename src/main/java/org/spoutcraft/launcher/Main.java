@@ -38,7 +38,7 @@ import com.beust.jcommander.JCommander;
 public class Main {
 
 	static String[]					args_temp;
-	public static String		build			= "1.0.1.1";
+	public static String		build			= "0.1";
 	public static String		currentPack;
 	static File							recursion;
 	public static LoginForm	loginForm;
@@ -79,7 +79,7 @@ public class Main {
 			params.addAll(Arrays.asList(args_temp));
 
 			if (PlatformUtils.getPlatform() == PlatformUtils.OS.macos) {
-				params.add("-Xdock:name=\"Technic Launcher\"");
+				params.add("-Xdock:name=\"Aegis Launcher\"");
 
 				try {
 					File icon = new File(PlatformUtils.getWorkingDirectory(), "launcher_icon.icns");
@@ -152,7 +152,7 @@ public class Main {
 		if (PlatformUtils.getPlatform() == PlatformUtils.OS.macos) {
 			try {
 				System.setProperty("apple.laf.useScreenMenuBar", "true");
-				System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Technic Launcher");
+				System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Aegis Launcher");
 				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 			} catch (Exception ignore) {
 			}

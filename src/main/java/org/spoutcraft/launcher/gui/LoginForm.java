@@ -230,7 +230,7 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 		purchaseAccount.setFont(new Font("Arial", Font.PLAIN, 11));
 		purchaseAccount.setForeground(new Color(0, 0, 255));
 
-		JLabel wikiLink = new HyperlinkJLabel("<html><u>Technic WebSite</u></html>", "http://technicpack.net/");
+		JLabel wikiLink = new HyperlinkJLabel("<html><u>Aegis Website</u></html>", "http://aegisgaming.org/");
 		wikiLink.setHorizontalAlignment(SwingConstants.RIGHT);
 		wikiLink.setBounds(233, 85, 109, 14);
 
@@ -369,7 +369,7 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 		if (SettingsUtil.getModPackSelection() != null) {
 			updateBranding();
 		} else {
-			setTitle("Technic Launcher - No Modpack Selected");
+			setTitle("Aegis Launcher - No Modpack Selected");
 		}
 	}
 
@@ -396,7 +396,7 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 				loginButton.setEnabled(true);
 				optionsButton.setEnabled(true);
 				setIconImage(Toolkit.getDefaultToolkit().getImage(ModPackYML.getModPackIcon()));
-				setTitle(String.format("Technic Launcher - %s - (%s)", Main.build, ModPackListYML.currentModPackLabel));
+				setTitle(String.format("Aegis Launcher - %s - (%s)", Main.build, ModPackListYML.currentModPackLabel));
 				options.reloadSettings();
 				MinecraftYML.updateMinecraftYMLCache();
 				setModLoaderEnabled();
@@ -943,7 +943,7 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 	@Override
 	public void windowClosed(WindowEvent e) {
 		if (success == LauncherFrame.ERROR_IN_LAUNCH) {
-			Util.log("Exiting the Technic Launcher");
+			Util.log("Exiting the Aegis Launcher");
 			System.exit(0);
 		}
 	}
