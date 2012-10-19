@@ -21,7 +21,7 @@ public class LibrariesYML {
 	public static void updateLibrariesYMLCache() {
 		if (!updated) {
 			synchronized (key) {
-				YmlUtils.downloadYmlFile(LIBRARIES_YML, "http://technic.freeworldsgaming.com/libraries.yml", librariesYMLFile);
+				YmlUtils.downloadYmlFile(LIBRARIES_YML, "http://files.aegisgaming.org/Technic/libraries.yml", librariesYMLFile);
 				updated = true;
 			}
 		}
