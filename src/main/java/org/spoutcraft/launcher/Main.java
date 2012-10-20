@@ -112,7 +112,6 @@ public class Main {
 		LoadingScreen ls = new LoadingScreen();
 		if (!isDebug()) {
 			ls.setVisible(true);
-			build = Util.getBuild();
 		}
 		Options options = new Options();
 		try {
