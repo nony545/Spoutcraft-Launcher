@@ -23,11 +23,13 @@ import java.awt.Container;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.DataInputStream;
@@ -52,6 +54,7 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -94,40 +97,46 @@ import org.spoutcraft.launcher.modpacks.ModPackYML;
 
 public class LoginForm extends JFrame implements ActionListener, DownloadListener, KeyListener, WindowListener {
 
-	private static final long									serialVersionUID	= 1L;
-	private final JPanel											contentPane;
+	private static final long								serialVersionUID	= 1L;
+	private final JPanel									contentPane;
 	private final JPasswordField							passwordField;
-	private final JComboBox										usernameField			= new JComboBox();
-	private final JButton											loginButton				= new JButton("Login");
-	JButton																		optionsButton			= new JButton("Options");
-	JButton																		modsButton				= new JButton("Mod Select");
-	private final JCheckBox										rememberCheckbox	= new JCheckBox("Remember");
-	final JLabel															background				= new JLabel("Loading...");
-	private final JButton											offlineMode				= new JButton("Offline Mode");
-	private final JButton											tryAgain					= new JButton("Try Again");
-	final JTextPane														editorPane				= new JTextPane();
-	private final JButton											loginSkin1;
+	private final JComboBox									usernameField			= new JComboBox();
+	private final JButton									loginButton				= new JButton("Login");
+	JButton													optionsButton			= new JButton("Options");
+	JButton													modsButton				= new JButton("Mod Select");
+	private final JCheckBox									rememberCheckbox		= new JCheckBox("Remember");
+	final JLabel											background				= new JLabel("Loading...");
+	private final JButton									offlineMode				= new JButton("Offline Mode");
+	private final JButton									tryAgain				= new JButton("Try Again");
+	final JTextPane											editorPane				= new JTextPane();
+	private final JButton									loginSkin1;
 	private final List<JButton>								loginSkin1Image;
-	private final JButton											loginSkin2;
+	private final JButton									loginSkin2;
 	private final List<JButton>								loginSkin2Image;
-	private TumblerFeedParsingWorker					tumblerFeed;
-	public final JProgressBar									progressBar;
-	HashMap<String, UserPasswordInformation>	usernames					= new HashMap<String, UserPasswordInformation>();
-	public boolean														mcUpdate					= false;
-	public boolean														spoutUpdate				= false;
-	public boolean														modpackUpdate			= false;
+	private TumblerFeedParsingWorker						tumblerFeed;
+	public final JProgressBar								progressBar;
+	HashMap<String, UserPasswordInformation>				usernames				= new HashMap<String, UserPasswordInformation>();
+	public boolean											mcUpdate				= false;
+	public boolean											spoutUpdate				= false;
+	public boolean											modpackUpdate			= false;
 	public static UpdateDialog								updateDialog;
-	private static String											pass							= null;
-	public static String[]										values						= null;
-	private int																success						= LauncherFrame.ERROR_IN_LAUNCH;
-	public String															workingDir				= PlatformUtils.getWorkingDirectory().getAbsolutePath();
-	public static final ModPackUpdater				gameUpdater				= new ModPackUpdater();
-	OptionDialog															options						= null;
-	ModsDialog																mods							= new ModsDialog(ModPackYML.getModList());
-	Container																	loginPane					= new Container();
-	Container																	offlinePane				= new Container();
+	private static String									pass					= null;
+	public static String[]									values					= null;
+	private int												success						= LauncherFrame.ERROR_IN_LAUNCH;
+	public String											workingDir				= PlatformUtils.getWorkingDirectory().getAbsolutePath();
+	public static final ModPackUpdater						gameUpdater				= new ModPackUpdater();
+	OptionDialog											options						= null;
+	ModsDialog												mods							= new ModsDialog(ModPackYML.getModList());
+	Container												loginPane					= new Container();
+	Container												offlinePane				= new Container();
 	// private final JLabel lblLogo;
 	private final JComboBox						modpackList;
+	
+	ArrayList<JButton> modButtons = new ArrayList<JButton>();
+	HashMap<String, Integer> positions = new HashMap<String, Integer>();
+	JButton Left = new JButton();
+	JButton Right = new JButton();
+	File cacheDir = new File(PlatformUtils.getWorkingDirectory(), "cache");
 
 	public LoginForm() {
 		loadLauncherData();
@@ -159,23 +168,43 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		setBounds((dim.width - 860) / 2, (dim.height - 500) / 2, 860, 500);
-
+		setBounds((dim.width - 860) / 2, (dim.height - 500) / 2, 850, 500);
 		contentPane = new JPanel();
 
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 		setContentPane(contentPane);
+		
+		Left.setBounds(-3, 5, 35, 110);
+		Left.setIcon(new ImageIcon(getClass().getResource("/org/spoutcraft/launcher/arrow_left.png")));
+		//Left.setVisible(false);
+		Left.addActionListener(this);
+		
+		Right.setBounds(811, 5, 35, 110);
+		Right.setIcon(new ImageIcon(getClass().getResource("/org/spoutcraft/launcher/arrow_right.png")));
+		Right.setVisible(true);
+		Right.addActionListener(this);
 
 		// lblLogo = new JLabel("");
 		// lblLogo.setBounds(8, 0, 294, 99);
 		List<String> items = new ArrayList<String>();
 		int i = 0;
+		int x = 0;
 		for (String item : ModPackListYML.modpackMap.keySet()) {
 			if (!Main.isOffline || GameUpdater.canPlayOffline(item)) {
+				Util.log(item);
 				items.add(item);
-				i += 1;
+				JButton button = new JButton();
+				button.setName(item);
+				button.setBounds((10 * x) + (i * 328) + 1, 10, 328, 100);
+				button.setIcon(ModPackListYML.getModPackLogo(item));
+				button.addActionListener(this);
+				modButtons.add(button);
+				positions.put(button.getName(), button.getLocation().x);
+				i++;
+				x++;
 			}
 		}
+
 		String[] itemArray = new String[i];
 		modpackList = new JComboBox(items.toArray(itemArray));
 		modpackList.setBounds(10, 10, 328, 100);
@@ -210,14 +239,14 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 
 		loginSkin2 = new JButton("Login as Player");
 		loginSkin2.setFont(new Font("Arial", Font.PLAIN, 11));
-		loginSkin2.setBounds(261, 428, 119, 23);
+		loginSkin2.setBounds(669, 428, 119, 23);
 		loginSkin2.setOpaque(false);
 		loginSkin2.addActionListener(this);
 		loginSkin2.setVisible(false);
 		loginSkin2Image = new ArrayList<JButton>();
 
 		progressBar = new JProgressBar();
-		progressBar.setBounds(30, 120, 400, 23);
+		progressBar.setBounds(229, 110, 400, 23);
 		progressBar.setVisible(false);
 		progressBar.setStringPainted(true);
 		progressBar.setOpaque(true);
@@ -253,7 +282,7 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 		JLabel trans2;
 
 		JScrollPane scrollPane = new JScrollPane(editorPane);
-		scrollPane.setBounds(473, 11, 372, 340);
+		scrollPane.setBounds(244, 134, 372, 217);
 		scrollPane.setBorder(BorderFactory.createEmptyBorder());
 		scrollPane.setOpaque(false);
 		scrollPane.getViewport().setOpaque(false);
@@ -262,12 +291,12 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 		trans2 = new JLabel();
 		trans2.setBackground(new Color(229, 246, 255, 100));
 		trans2.setOpaque(true);
-		trans2.setBounds(473, 11, 372, 340);
+		trans2.getBounds().setBounds(244, 111, 372, 240);
 
 		JLabel login = new JLabel();
 		login.setBackground(new Color(255, 255, 255, 120));
 		login.setOpaque(true);
-		login.setBounds(473, 362, 372, 99);
+		login.setBounds(243, 362, 372, 99);
 
 		JLabel trans;
 		trans = new JLabel();
@@ -283,13 +312,18 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 		contentPane.setLayout(null);
 		rememberCheckbox.setBounds(144, 66, 93, 23);
 		// contentPane.add(lblLogo);
-		contentPane.add(modpackList);
+		//contentPane.add(modpackList);
 		optionsButton.setBounds(272, 41, 86, 23);
 		modsButton.setBounds(15, 66, 93, 23);
 		contentPane.add(loginSkin1);
 		contentPane.add(loginSkin2);
+		contentPane.add(Left);
+		contentPane.add(Right);
+		for (JButton button : modButtons) {
+			contentPane.add(button);
+		}
 
-		loginPane.setBounds(473, 362, 372, 106);
+		loginPane.setBounds(244, 362, 372, 106);
 		loginPane.add(lblPassword);
 		loginPane.add(lblMinecraftUsername);
 		loginPane.add(passwordField);
@@ -524,7 +558,7 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 								if (!Main.isOffline) {
 									loginSkin2.setText(user);
 									loginSkin2.setVisible(true);
-									ImageUtils.drawCharacter(contentPane, this, "http://s3.amazonaws.com/MinecraftSkins/" + skinName + ".png", 293, 170, loginSkin2Image);
+									ImageUtils.drawCharacter(contentPane, this, "http://s3.amazonaws.com/MinecraftSkins/" + skinName + ".png", 700, 170, loginSkin2Image);
 								}
 							}
 						}
@@ -586,6 +620,42 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 			eventId = "Login";
 			this.usernameField.setSelectedItem(loginSkin2.getText());
 		}
+		
+		if (source == Right) {
+			Left.setVisible(true);
+			if (modButtons.get(modButtons.size() - 1).getLocation().x > (860 - (modButtons.get(modButtons.size() - 1).getWidth()))) {
+				for (JButton button : modButtons) {
+					Point curPos = button.getLocation();
+					button.setLocation(curPos.x - 50, curPos.y);
+				}
+			}
+		}
+		
+		if (source == Left) {
+			Right.setVisible(true);
+			for (JButton button : modButtons) {
+				if (button.getLocation().x != positions.get(button.getName())) {
+					Point curPos = button.getLocation();
+					button.setLocation(curPos.x + 50, curPos.y);
+				}
+			}
+		}
+		
+		for (JButton button : modButtons) {
+			if (source == button) {
+				if (ModPackListYML.currentModPack == null) {
+					SettingsUtil.init();
+					GameUpdater.copy(SettingsUtil.settingsFile, ModPackListYML.ORIGINAL_PROPERTIES);
+				} else {
+					GameUpdater.copy(SettingsUtil.settingsFile, new File(GameUpdater.modpackDir, "launcher.properties"));
+				}
+				
+				SettingsUtil.setModPack(button.getName());
+				background.setIcon(new ImageIcon(cacheDir + "/" + button.getName() + ".jpg"));
+				updateBranding();
+			}
+		}
+		
 		if ((source == modpackList)) {
 			if (ModPackListYML.currentModPack == null) {
 				SettingsUtil.init();
@@ -932,8 +1002,19 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 
 		File cacheDir = new File(PlatformUtils.getWorkingDirectory(), "cache");
 		cacheDir.mkdir();
-		File backgroundImage = new File(cacheDir, "launcher_background.jpg");
-		(new BackgroundImageWorker(backgroundImage, background)).execute();
+		
+		background.setVerticalAlignment(SwingConstants.CENTER);
+		background.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		for (JButton button : modButtons)
+		(new BackgroundImageWorker(new File(cacheDir, button.getName() + ".jpg"), "http://files.aegisgaming.org/Technic/" + button.getName() + "/resources/background.jpg")).execute();
+		if (SettingsUtil.getModPackSelection() != null)
+		{
+			background.setIcon(new ImageIcon(cacheDir + "/" + ModPackListYML.currentModPack + ".jpg"));
+		} else {
+			background.setIcon(new ImageIcon(cacheDir + "/vanilla.jpg"));
+		}
+			
 	}
 
 	@Override

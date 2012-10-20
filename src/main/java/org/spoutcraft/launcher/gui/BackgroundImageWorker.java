@@ -17,19 +17,19 @@ public class BackgroundImageWorker extends SwingWorker<Object, Object> {
 	private static final String	TEKKIT_URL_02			= "http://technicpack.net/wp-content/uploads/2011/12/tekkitaltsmall.png";
 	private static final int		IMAGE_CYCLE_TIME	= 24 * 60 * 60 * 1000;
 	private File								backgroundImage;
-	private JLabel							background;
+	private String							url;
 
-	public BackgroundImageWorker(File backgroundImage, JLabel background) {
+	public BackgroundImageWorker(File backgroundImage, String url) {
 		this.backgroundImage = backgroundImage;
-		this.background = background;
+		this.url = url;
 	}
 
 	@Override
 	protected Object doInBackground() {
 		try {
 			if (!backgroundImage.exists() || backgroundImage.length() < 10 * 1024 || System.currentTimeMillis() - backgroundImage.lastModified() > IMAGE_CYCLE_TIME) {
-				String url;
-				if (!MirrorUtils.isAddressReachable(SPLASH_URL)) {
+				//String url;
+				if (!MirrorUtils.isAddressReachable(url)) {
 					if (!MirrorUtils.isAddressReachable(TEKKIT_URL_01)) {
 						url = TEKKIT_URL_02;
 					} else {
@@ -47,12 +47,5 @@ public class BackgroundImageWorker extends SwingWorker<Object, Object> {
 			e.printStackTrace();
 		}
 		return null;
-	}
-
-	@Override
-	protected void done() {
-		background.setIcon(new ImageIcon(backgroundImage.getPath()));
-		background.setVerticalAlignment(SwingConstants.CENTER);
-		background.setHorizontalAlignment(SwingConstants.CENTER);
 	}
 }

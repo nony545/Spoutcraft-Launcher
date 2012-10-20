@@ -89,9 +89,6 @@ public class LoadingScreen extends JDialog {
 		contentPane.add(closePanel, BorderLayout.NORTH);
 		contentPane.add(main, BorderLayout.CENTER);
 
-		// set raised beveled border for window
-		contentPane.setBorder(BorderFactory.createRaisedBevelBorder());
-
 		// Set position somewhere near the middle of the screen
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setLocation(screenSize.width / 2 - (getWidth() / 2), screenSize.height / 2 - (getHeight() / 2));
