@@ -46,20 +46,6 @@ public class MinecraftDownloadUtils {
 				// }
 
 				if (!minecraftVersion.equals(requiredMinecraftVersion)) {
-<<<<<<< HEAD
-					VersionTree versions = new VersionTree("http://files.aegisgaming.org/Technic/Patches/Minecraft/minecraft_diffs.txt", minecraftVersion);
-					List<VersionPair> ver_path = versions.getVersionPath(requiredMinecraftVersion);
-					if(ver_path == null)
-					{
-						// If no path was found, fake it and hope there's a diff file directly between
-						// these two versions!
-						ver_path = new ArrayList<VersionPair>();
-						VersionPair vp = versions.new VersionPair();
-						vp.ver_first = minecraftVersion;
-						vp.ver_next = requiredMinecraftVersion;
-						ver_path.add(vp);
-					}
-=======
 					File patch = new File(GameUpdater.tempDir, "mc.patch");
 					String patchURL = build.getPatchURL(minecraftVersion, requiredMinecraftVersion);
 					Download patchDownload = DownloadUtils.downloadFile(patchURL, patch.getPath(), null, null, listener);
@@ -71,7 +57,6 @@ public class MinecraftDownloadUtils {
 						listener.stateChanged(String.format("Patched Minecraft to '%s'.", requiredMinecraftVersion), 100F);
 						String currentMinecraftMD5 = MD5Utils.getMD5(FileType.minecraft, requiredMinecraftVersion);
 						resultMD5 = MD5Utils.getMD5(patchedMinecraft);
->>>>>>> parent of 630fc8b... Added experimental tiered diff patching
 
 						if (currentMinecraftMD5.equals(resultMD5)) {
 							outputFile = download.getOutFile();
