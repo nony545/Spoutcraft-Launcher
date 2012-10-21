@@ -49,7 +49,7 @@ public class MinecraftDownloadUtils {
 				// }
 
 				if (!minecraftVersion.equals(requiredMinecraftVersion)) {
-					VersionTree versions = new VersionTree(GameUpdater.workDir + "/minecraft_diffs.txt", minecraftVersion);
+					VersionTree versions = new VersionTree("http://files.aegisgaming.org/Technic/Patches/Minecraft/minecraft_diffs.txt", minecraftVersion);
 					List<VersionPair> ver_path = versions.getVersionPath(requiredMinecraftVersion);
 					if(ver_path == null)
 					{
