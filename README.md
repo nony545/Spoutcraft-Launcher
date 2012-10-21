@@ -6,7 +6,7 @@ The goal of this launcher is to provide a one-click method to switch modpacks an
 
 Main site is here: http://aegisgaming.org/
 
-Get the latest build of this launcher from: http://files.aegisgaming.org/aegis-launcher.jar or via our auto updater at http://files.aegisgaming.org/AegisLauncher.exe
+Get the latest build of this launcher from: http://files.aegisgaming.org/Technic/aegis-launcher.jar or via our auto updater at http://files.aegisgaming.org/Technic/AegisLauncher.exe
 
 --
 Maintained by:
