@@ -14,10 +14,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.spoutcraft.launcher;
+package net.minecraft;
 
 import java.applet.Applet;
 import java.applet.AppletStub;
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.HeadlessException;
@@ -27,11 +28,16 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.spoutcraft.launcher.FileUtils;
+import org.spoutcraft.launcher.GameUpdater;
+import org.spoutcraft.launcher.LauncherController;
+
+
 /**
  * 
  * @author creadri
  */
-public class MinecraftAppletEnglober extends Applet implements AppletStub {
+public class Launcher extends Applet implements AppletStub {
 
 	/**
    *
@@ -42,12 +48,12 @@ public class MinecraftAppletEnglober extends Applet implements AppletStub {
 	private final Map<String, String>	customParameters;
 	private boolean										active						= false;
 
-	public MinecraftAppletEnglober() throws HeadlessException {
+	public Launcher() throws HeadlessException {
 		this.customParameters = new HashMap<String, String>();
 		this.setLayout(new GridBagLayout());
 	}
 
-	public MinecraftAppletEnglober(Applet minecraftApplet) throws HeadlessException {
+	public Launcher(Applet minecraftApplet) throws HeadlessException {
 		this();
 		this.minecraftApplet = minecraftApplet;
 		java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
@@ -116,9 +122,9 @@ public class MinecraftAppletEnglober extends Applet implements AppletStub {
 	public void start() {
 		if (minecraftApplet != null) {
 			try {
-				Launcher.mcField.setAccessible(true);
-				Object mcInstance = Launcher.mcField.get(minecraftApplet);
-				Field quitField = Launcher.mcClass.getDeclaredField("n");
+				LauncherController.mcField.setAccessible(true);
+				Object mcInstance = LauncherController.mcField.get(minecraftApplet);
+				Field quitField = LauncherController.mcClass.getDeclaredField("n");
 				Object quitInstance = quitField.get(mcInstance);
 				quitField.setBoolean(mcInstance, Boolean.FALSE);
 			} catch (Exception e) {
@@ -136,6 +142,21 @@ public class MinecraftAppletEnglober extends Applet implements AppletStub {
 			minecraftApplet.stop();
 			active = false;
 		}
+	}
+	
+	public void replace(Applet applet)
+	{
+		this.minecraftApplet = applet;
+
+		applet.setStub(this);
+		applet.setSize(getWidth(), getHeight());
+
+		this.setLayout(new BorderLayout());
+		this.add(applet, "Center");
+		applet.init();
+		active = true;
+		applet.start();
+		validate();
 	}
 
 	@Override

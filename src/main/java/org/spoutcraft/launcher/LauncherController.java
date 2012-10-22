@@ -30,7 +30,7 @@ import org.spoutcraft.launcher.exception.CorruptedMinecraftJarException;
 import org.spoutcraft.launcher.exception.MinecraftVerifyException;
 import org.spoutcraft.launcher.exception.UnknownMinecraftException;
 
-public class Launcher {
+public class LauncherController {
 
 	public static Class<?>	mcClass	= null, appletClass = null;
 	public static Field			mcField	= null;
@@ -49,7 +49,7 @@ public class Launcher {
 		ModpackBuild build = ModpackBuild.getSpoutcraftBuild();
 		Map<String, Object> libraries = build.getLibraries();
 
-		int librarycount = 4;
+		int librarycount = 5;
 		if (libraries != null) {
 			librarycount += libraries.size();
 		}
@@ -69,15 +69,17 @@ public class Launcher {
 		URL urls[] = new URL[5];
 
 		try {
-			urls[0] = minecraftJar.toURI().toURL();
-			files[index + 0] = minecraftJar;
-			urls[1] = jinputJar.toURI().toURL();
-			files[index + 1] = jinputJar;
-			urls[2] = lwglJar.toURI().toURL();
-			files[index + 2] = lwglJar;
-			urls[3] = lwjgl_utilJar.toURI().toURL();
-			files[index + 3] = lwjgl_utilJar;
-			urls[4] = spoutcraftJar.toURI().toURL();
+			// spoutcraftJar must be loaded first into classpath with FML 3.x+
+			urls[0] = spoutcraftJar.toURI().toURL();
+			files[index + 0] = spoutcraftJar;
+			urls[1] = minecraftJar.toURI().toURL();
+			files[index + 1] = minecraftJar;
+			urls[2] = jinputJar.toURI().toURL();
+			files[index + 2] = jinputJar;
+			urls[3] = lwglJar.toURI().toURL();
+			files[index + 3] = lwglJar;
+			urls[4] = lwjgl_utilJar.toURI().toURL();
+			files[index + 4] = lwjgl_utilJar;
 
 			ClassLoader classLoader = new MinecraftClassLoader(urls, ClassLoader.getSystemClassLoader(), spoutcraftJar, files);
 
