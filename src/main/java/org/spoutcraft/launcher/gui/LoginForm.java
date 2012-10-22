@@ -30,6 +30,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseWheelEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.DataInputStream;
@@ -45,6 +47,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.Vector;
 
 import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
@@ -95,12 +98,12 @@ import org.spoutcraft.launcher.modpacks.ModPackListYML;
 import org.spoutcraft.launcher.modpacks.ModPackUpdater;
 import org.spoutcraft.launcher.modpacks.ModPackYML;
 
-public class LoginForm extends JFrame implements ActionListener, DownloadListener, KeyListener, WindowListener {
+public class LoginForm extends JFrame implements ActionListener, DownloadListener, KeyListener, WindowListener, MouseListener, Runnable {
 
 	private static final long								serialVersionUID	= 1L;
 	private final JPanel									contentPane;
 	private final JPasswordField							passwordField;
-	private final JComboBox									usernameField			= new JComboBox();
+	private final JComboBox<String>									usernameField			= new JComboBox<String>();
 	private final JButton									loginButton				= new JButton("Login");
 	JButton													optionsButton			= new JButton("Options");
 	JButton													modsButton				= new JButton("Mod Select");
@@ -130,14 +133,21 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 	Container												loginPane					= new Container();
 	Container												offlinePane				= new Container();
 	// private final JLabel lblLogo;
-	private final JComboBox						modpackList;
+	private final JComboBox<?>						modpackList;
 	
 	ArrayList<JButton> modButtons = new ArrayList<JButton>();
 	HashMap<String, Integer> positions = new HashMap<String, Integer>();
 	JButton Left = new JButton();
 	JButton Right = new JButton();
+	
+	JButton heldButton = null;
+	
 	File cacheDir = new File(PlatformUtils.getWorkingDirectory(), "cache");
+	
+	//Collection<Component> heldDown = Collections.synchronizedCollection(new HashSet<Component>());
+	Vector<Component> test = new Vector<Component>();
 
+	@SuppressWarnings("unchecked")
 	public LoginForm() {
 		loadLauncherData();
 
@@ -168,7 +178,7 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		setBounds((dim.width - 860) / 2, (dim.height - 500) / 2, 850, 500);
+		setBounds((dim.width - 1062) / 2, (dim.height - 625) / 2, 850, 500);
 		contentPane = new JPanel();
 
 		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -177,12 +187,14 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 		Left.setBounds(-3, 5, 35, 110);
 		Left.setIcon(new ImageIcon(getClass().getResource("/org/spoutcraft/launcher/arrow_left.png")));
 		//Left.setVisible(false);
-		Left.addActionListener(this);
+		//Left.addActionListener(this);
+		Left.addMouseListener(this);
 		
 		Right.setBounds(811, 5, 35, 110);
 		Right.setIcon(new ImageIcon(getClass().getResource("/org/spoutcraft/launcher/arrow_right.png")));
 		Right.setVisible(true);
-		Right.addActionListener(this);
+		//Right.addActionListener(this);
+		Right.addMouseListener(this);
 
 		// lblLogo = new JLabel("");
 		// lblLogo.setBounds(8, 0, 294, 99);
@@ -206,7 +218,7 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 		}
 
 		String[] itemArray = new String[i];
-		modpackList = new JComboBox(items.toArray(itemArray));
+		modpackList = new JComboBox<Object>(items.toArray(itemArray));
 		modpackList.setBounds(10, 10, 328, 100);
 		ComboBoxRenderer renderer = new ComboBoxRenderer();
 		renderer.setPreferredSize(new Dimension(200, 110));
@@ -387,6 +399,10 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 			offlinePane.setVisible(true);
 			loginPane.setVisible(false);
 		}
+		
+		Thread th = new Thread(this);
+		th.start();
+		
 	}
 
 	public void loadLauncherData() {
@@ -484,35 +500,6 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 	public void keyReleased(KeyEvent e) {
 	}
 
-	private void tryConvertLastLogin() {
-		try {
-			File lastLogin = new File(PlatformUtils.getWorkingDirectory(), "lastlogin");
-			Cipher cipher = getCipher(2, "passwordfile");
-			DataInputStream dis;
-			if (cipher != null) dis = new DataInputStream(new CipherInputStream(new FileInputStream(lastLogin), cipher));
-			else dis = new DataInputStream(new FileInputStream(lastLogin));
-			String userName = dis.readUTF();
-			String password = dis.readUTF();
-
-			dis.close();
-
-			cipher = getCipher(1, "passwordfile");
-
-			DataOutputStream dos;
-			if (cipher != null) {
-				dos = new DataOutputStream(new CipherOutputStream(new FileOutputStream(lastLogin), cipher));
-			} else {
-				dos = new DataOutputStream(new FileOutputStream(lastLogin, true));
-			}
-			dos.writeUTF(userName);
-			dos.writeBoolean(false);
-			dos.writeUTF(password);
-			dos.close();
-		} catch (Exception ignore) {
-
-		}
-	}
-
 	private void readUsedUsernames() {
 		int i = 0;
 		try {
@@ -605,6 +592,12 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 			e.printStackTrace();
 		}
 	}
+	
+	
+	@Override
+	protected void processMouseWheelEvent(MouseWheelEvent e) {
+		
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent event) {
@@ -621,7 +614,7 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 			this.usernameField.setSelectedItem(loginSkin2.getText());
 		}
 		
-		if (source == Right) {
+		/*if (source == Right) {
 			Left.setVisible(true);
 			if (modButtons.get(modButtons.size() - 1).getLocation().x > (860 - (modButtons.get(modButtons.size() - 1).getWidth()))) {
 				for (JButton button : modButtons) {
@@ -639,7 +632,7 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 					button.setLocation(curPos.x + 50, curPos.y);
 				}
 			}
-		}
+		}*/
 		
 		for (JButton button : modButtons) {
 			if (source == button) {
@@ -655,18 +648,7 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 				updateBranding();
 			}
 		}
-		
-		if ((source == modpackList)) {
-			if (ModPackListYML.currentModPack == null) {
-				SettingsUtil.init();
-				GameUpdater.copy(SettingsUtil.settingsFile, ModPackListYML.ORIGINAL_PROPERTIES);
-			} else {
-				GameUpdater.copy(SettingsUtil.settingsFile, new File(GameUpdater.modpackDir, "launcher.properties"));
-			}
-			String selectedItem = (String) ((JComboBox) source).getSelectedItem();
-			SettingsUtil.setModPack(selectedItem);
-			updateBranding();
-		}
+
 		if ((eventId.equals("Login") || eventId.equals(usernameField.getSelectedItem())) && loginButton.isEnabled()) {
 			doLogin();
 		} else if (eventId.equals("Options")) {
@@ -1086,6 +1068,74 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 		 */
 		public void setProfileName(String profileName) {
 			this.profileName = profileName;
+		}
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void mousePressed(MouseEvent e) {
+		test.add(e.getComponent());
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		test.remove(e.getComponent());		
+	}
+
+	
+	@Override
+	public void run() {
+		while (true) {
+			Vector<Component> copy = null;
+			synchronized (test) {
+				copy = new Vector<Component>(test);
+			}
+			
+			for (Component c : copy) {
+				if (c.equals(Right)) {
+					Left.setVisible(true);
+					if (modButtons.get(modButtons.size() - 1).getLocation().x > (860 - (modButtons.get(modButtons.size() - 1).getWidth()))) {
+						for (JButton button : modButtons) {
+							Point curPos = button.getLocation();
+							button.setLocation(curPos.x - 1, curPos.y);
+						}
+					}
+				}
+				
+				else if (c.equals(Left)) {
+					Right.setVisible(true);
+					for (JButton button : modButtons) {
+						if (button.getLocation().x != positions.get(button.getName())) {
+							Point curPos = button.getLocation();
+							button.setLocation(curPos.x + 1, curPos.y);
+						}
+					}
+				}
+			}
+			
+			try {
+				Thread.sleep(0, 350);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 }
