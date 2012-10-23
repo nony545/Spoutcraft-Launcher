@@ -415,13 +415,13 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 
 		LibrariesYML.updateLibrariesYMLCache();
 		ModLibraryYML.updateModLibraryYML();
-		background.setIcon(new ImageIcon(getClass().getResource("/org/spoutcraft/launcher/background.jpg")));
 		
 
 		if (SettingsUtil.getModPackSelection() != null) {
 			updateBranding();
 		} else {
 			setTitle("Aegis Launcher - No Modpack Selected");
+			background.setIcon(new ImageIcon(getClass().getResource("/org/spoutcraft/launcher/background.jpg")));
 		}
 	}
 
@@ -447,6 +447,7 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 
 				loginButton.setEnabled(true);
 				optionsButton.setEnabled(true);
+				background.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ModPackYML.getModPackBackground())));
 				setIconImage(Toolkit.getDefaultToolkit().getImage(ModPackYML.getModPackIcon()));
 				setTitle(String.format("Aegis Launcher - %s - (%s)", Main.build, ModPackListYML.currentModPackLabel));
 				options.reloadSettings();
@@ -646,7 +647,6 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 				}
 				
 				SettingsUtil.setModPack(button.getName());
-				background.setIcon(new ImageIcon(cacheDir + "/" + button.getName() + ".jpg"));
 				updateBranding();
 			}
 		}
@@ -989,19 +989,6 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 		
 		background.setVerticalAlignment(SwingConstants.CENTER);
 		background.setHorizontalAlignment(SwingConstants.CENTER);
-		
-		for (JButton button : modButtons)
-		(new BackgroundImageWorker(new File(cacheDir, button.getName() + ".jpg"), "http://files.aegisgaming.org/Technic/" + button.getName() + "/resources/background.jpg")).execute();
-		if (SettingsUtil.getModPackSelection() != null)
-		{
-			if (new File(cacheDir + "/" + ModPackListYML.currentModPack + ".jpg").exists())
-				background.setIcon(new ImageIcon(cacheDir + "/" + ModPackListYML.currentModPack + ".jpg"));
-			else
-				background.setIcon(new ImageIcon(getClass().getResource("/org/spoutcraft/launcher/background.jpg")));
-		} else {
-			background.setIcon(new ImageIcon(getClass().getResource("/org/spoutcraft/launcher/background.jpg")));
-		}
-			
 	}
 
 	@Override

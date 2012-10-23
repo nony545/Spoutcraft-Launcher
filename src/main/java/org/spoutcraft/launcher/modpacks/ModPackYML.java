@@ -86,6 +86,10 @@ public class ModPackYML {
 	public static String getModPackFavIcon() {
 		return new File(ModPackListYML.currentModPackDirectory, "resources" + File.separator + "favicon.png").getAbsolutePath();
 	}
+	
+	public static String getModPackBackground() {
+		return new File(ModPackListYML.currentModPackDirectory, "resources" + File.separator + "background.jpg").getAbsolutePath();
+	}
 
 	public static String[] getModpackBuilds() {
 		Configuration config = getModPackYML();
