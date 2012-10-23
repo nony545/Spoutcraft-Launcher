@@ -415,6 +415,8 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 
 		LibrariesYML.updateLibrariesYMLCache();
 		ModLibraryYML.updateModLibraryYML();
+		background.setIcon(new ImageIcon(getClass().getResource("/org/spoutcraft/launcher/background.jpg")));
+		
 
 		if (SettingsUtil.getModPackSelection() != null) {
 			updateBranding();
@@ -992,9 +994,12 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 		(new BackgroundImageWorker(new File(cacheDir, button.getName() + ".jpg"), "http://files.aegisgaming.org/Technic/" + button.getName() + "/resources/background.jpg")).execute();
 		if (SettingsUtil.getModPackSelection() != null)
 		{
-			background.setIcon(new ImageIcon(cacheDir + "/" + ModPackListYML.currentModPack + ".jpg"));
+			if (new File(cacheDir + "/" + ModPackListYML.currentModPack + ".jpg").exists())
+				background.setIcon(new ImageIcon(cacheDir + "/" + ModPackListYML.currentModPack + ".jpg"));
+			else
+				background.setIcon(new ImageIcon(getClass().getResource("/org/spoutcraft/launcher/background.jpg")));
 		} else {
-			background.setIcon(new ImageIcon(cacheDir + "/vanilla.jpg"));
+			background.setIcon(new ImageIcon(getClass().getResource("/org/spoutcraft/launcher/background.jpg")));
 		}
 			
 	}
@@ -1128,13 +1133,6 @@ public class LoginForm extends JFrame implements ActionListener, DownloadListene
 						}
 					}
 				}
-			}
-			
-			try {
-				Thread.sleep(0, 350);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 		}
 	}

@@ -28,16 +28,6 @@ public class BackgroundImageWorker extends SwingWorker<Object, Object> {
 	protected Object doInBackground() {
 		try {
 			if (!backgroundImage.exists() || backgroundImage.length() < 10 * 1024 || System.currentTimeMillis() - backgroundImage.lastModified() > IMAGE_CYCLE_TIME) {
-				//String url;
-				if (!MirrorUtils.isAddressReachable(url)) {
-					if (!MirrorUtils.isAddressReachable(TEKKIT_URL_01)) {
-						url = TEKKIT_URL_02;
-					} else {
-						url = TEKKIT_URL_01;
-					}
-				} else {
-					url = SPLASH_URL;
-				}
 
 				Download download = new Download(url, backgroundImage.getPath());
 				download.run();
