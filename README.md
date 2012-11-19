@@ -1,4 +1,4 @@
-Aegis Launcher (based off Technic Launcer)
+Aegis Launcher (based off Technic Launcher) [![Build Status](http://build.aegisgaming.org:8080/job/Aegis%20Launcher/badge/icon)](http://build.aegisgaming.org:8080/job/Aegis%20Launcher/)
 
 The goal of this launcher is to provide a one-click method to switch modpacks and versions in as simple a manner as possible for the end user!
 
