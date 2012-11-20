@@ -80,7 +80,7 @@ public class ModPackYML {
 	}
 
 	public static String getModPackLogo() {
-		return new File(ModPackListYML.currentModPackDirectory, "resources" + File.separator + "logo.png").getAbsolutePath();
+		return new File(ModPackListYML.currentModPackDirectory, "resources" + File.separator + "mod_select.png").getAbsolutePath();
 	}
 
 	public static String getModPackFavIcon() {
@@ -88,7 +88,7 @@ public class ModPackYML {
 	}
 	
 	public static String getModPackBackground() {
-		return new File(ModPackListYML.currentModPackDirectory, "resources" + File.separator + "background.jpg").getAbsolutePath();
+		return new File(ModPackListYML.currentModPackDirectory, "resources" + File.separator + "background.png").getAbsolutePath();
 	}
 
 	public static String[] getModpackBuilds() {

@@ -41,7 +41,7 @@ import org.spoutcraft.launcher.modpacks.ModPackYML;
 public class LauncherFrame extends Frame implements WindowListener {
 	private static final long				serialVersionUID	= 4524937541564722358L;
 	private Launcher	minecraft;
-	private LoginForm								loginForm					= null;
+	private MainForm								loginForm					= null;
 
 	public static final int					RETRYING_LAUNCH		= -1;
 	public static final int					ERROR_IN_LAUNCH		= 0;
@@ -59,11 +59,11 @@ public class LauncherFrame extends Frame implements WindowListener {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ModPackYML.getModPackIcon()));
 	}
 
-	public void setLoginForm(LoginForm form) {
-		loginForm = form;
+	public void setLoginForm(MainForm mainForm) {
+		loginForm = mainForm;
 	}
 
-	public LoginForm getLoginForm() {
+	public MainForm getLoginForm() {
 		return loginForm;
 	}
 

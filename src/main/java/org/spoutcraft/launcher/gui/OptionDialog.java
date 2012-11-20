@@ -83,7 +83,7 @@ public class OptionDialog extends JDialog implements ActionListener {
 		buildInfo.setText("Aegis Launcher Build " + Main.build);
 		buildInfo.setOpaque(true);
 		buildInfo.setForeground(Color.DARK_GRAY);
-		buildInfo.setToolTipText("Created by the Technic Team and Modified by vidplace7 for Aegis Gaming. Licensed under the LGPL. Source code is available at www.github.com/SpoutDev");
+		buildInfo.setToolTipText("Created by the Technic Team and Redesigned/Optimized by funbob10 for AegisGaming. Licensed under the LGPL. Source code is available at www.github.com/SpoutDev");
 
 		customBuilds.setToolTipText("Only use if you know what you are doing!");
 		devBuilds.setToolTipText("Development builds are often unstable and buggy. Use at your own risk!");

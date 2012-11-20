@@ -16,19 +16,22 @@ import javax.swing.border.EmptyBorder;
 import org.spoutcraft.launcher.Main;
 import org.spoutcraft.launcher.modpacks.ModPackListYML;
 
+// EDITED FOR USE OF MAINFORM.JAVA
+
+
 public class UpdateDialog extends JDialog implements ActionListener {
 
 	private static final long	serialVersionUID	= -4617588853047124397L;
 	private final JPanel			contentPanel			= new JPanel();
 	private final JLabel			label							= new JLabel("There is a new update for %TO_UPDATE%.");
-	private final LoginForm		lf;
+	private final MainForm		mf;
 
 	public void setToUpdate(String str) {
 		label.setText(label.getText().replace("%TO_UPDATE%", str));
 	}
 
-	public UpdateDialog(LoginForm lf) {
-		this.lf = lf;
+	public UpdateDialog(MainForm mainForm) {
+		this.mf = mainForm;
 		setBounds((Toolkit.getDefaultToolkit().getScreenSize().width - 450) / 2, (Toolkit.getDefaultToolkit().getScreenSize().height - 136) / 2, 450, 136);
 		this.toFront();
 		this.setAlwaysOnTop(true);
@@ -64,12 +67,12 @@ public class UpdateDialog extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		String actionCommand = e.getActionCommand();
 		if (actionCommand.equals("Yes")) {
-			lf.updateThread();
+			mf.updateThread();
 		} else if (actionCommand.equals("No")) {
-			lf.runGame();
+			mf.runGame();
 		}
-		if (Main.loginForm != null)
-			Main.loginForm.enableUI();
+		//if (Main.loginForm != null)
+			//Main.loginForm.enableUI();
 		this.setVisible(false);
 	}
 

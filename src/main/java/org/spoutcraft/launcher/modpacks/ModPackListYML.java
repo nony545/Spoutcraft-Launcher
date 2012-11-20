@@ -24,14 +24,14 @@ import org.spoutcraft.launcher.YmlUtils;
 
 public class ModPackListYML {
 
-	public static final File										ORIGINAL_PROPERTIES			= new File(GameUpdater.cacheDir, "launcher.properties");
+	public static final File										ORIGINAL_PROPERTIES			= new File(PlatformUtils.getWorkingDirectory(), "launcher.properties");
 	private static final String									RESOURCES_PATH					= "resources";
 	private static final String									ICON_ICO								= "icon.ico";
 	private static final String									ICON_ICNS								= "icon.icns";
 	private static final String									ICON_PNG								= "icon.png";
 	private static final String									FAVICON_PNG							= "favicon.png";
-	private static final String									LOGO_PNG								= "logo.png";
-	private static final String									BACKGROUND_JPG			= "background.jpg";
+	private static final String									LOGO_PNG								= "mod_select.png";
+	private static final String									BACKGROUND_JPG			= "background.png";
 	private static final String									MODPACKS_YML						= "modpacks.yml";
 
 	private static final List<String>						RESOURCES								= new LinkedList();

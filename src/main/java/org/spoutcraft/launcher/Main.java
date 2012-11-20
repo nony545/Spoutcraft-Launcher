@@ -30,7 +30,7 @@ import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 
 import org.spoutcraft.launcher.gui.LoadingScreen;
-import org.spoutcraft.launcher.gui.LoginForm;
+import org.spoutcraft.launcher.gui.MainForm;
 import org.spoutcraft.launcher.logs.SystemConsoleListener;
 
 import com.beust.jcommander.JCommander;
@@ -41,9 +41,12 @@ public class Main {
 	public static String		build			= "0.1";
 	public static String		currentPack;
 	static File							recursion;
-	public static LoginForm	loginForm;
+	public static JFrame	loginForm;
 	public static boolean		isOffline	= false;
 
+	
+	// EDITED FOR USE OF MAINFORM.JAVA
+	
 	public Main() throws Exception {
 		main(new String[0]);
 	}
@@ -190,8 +193,8 @@ public class Main {
 
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		SettingsUtil.setLatestLWJGL(false);
-		loginForm = new LoginForm();
-		loginForm.setLocationByPlatform(true);
+		loginForm = new MainForm();
+		//loginForm.setLocationByPlatform(true);
 		loginForm.setVisible(true);
 		ls.close();
 
