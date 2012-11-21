@@ -19,7 +19,6 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.mainClass>${project.groupId}.launcher.Main</project.mainClass>
-		<project.build.number>1</project.build.number>
 		<project.version.string>${release.version}.${BUILD_NUMBER}</project.version.string>
 	</properties>
 
