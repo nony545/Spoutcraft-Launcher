@@ -41,7 +41,7 @@
 	<!-- Continuous integration -->
 	<ciManagement>
 		<system>jenkins</system>
-		<url>http://build.aegisgaming.org/</url>
+		<url>http://build.aegisgaming.org/job/Aegis-Launcher/</url>
 	</ciManagement>
 
 	<!-- Repository locations -->
