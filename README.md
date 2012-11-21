@@ -1,13 +1,14 @@
-Aegis Launcher (based off Technic Launcher) [![Build Status](http://build.aegisgaming.org:8080/job/Aegis%20Launcher/badge/icon)](http://build.aegisgaming.org:8080/job/Aegis%20Launcher/)
+Aegis Launcher (based off Technic Launcher) [![Build Status](http://build.aegisgaming.org/job/Aegis-Launcher/badge/icon)](http://build.aegisgaming.org/job/Aegis-Launcher/)
 
 The goal of this launcher is to provide a one-click method to switch modpacks and versions in as simple a manner as possible for the end user!
 
 -------------------
 
-Main site is here: http://aegisgaming.org/
+[Aegis Gaming website](http://aegisgaming.org/)
 
-Get the latest build of this launcher from: http://files.aegisgaming.org/Technic/aegis-launcher.jar or via our auto updater at http://files.aegisgaming.org/Technic/AegisLauncher.exe
+Get the latest dev build of this launcher from our [Jenkins CI server](http://build.aegisgaming.org/job/Aegis-Launcher/)
+or from our [Launcher Download Site](http://launcher.aegisgaming.org)
 
 --
 Maintained by:
-vidplace7 and funbob10 (unleashurgeek)
+funbob10 (unleashurgeek) and vidplace7
