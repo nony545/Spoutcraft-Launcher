@@ -11,7 +11,7 @@
 	<!-- Project information -->
 	<groupId>org.spoutcraft</groupId>
 	<artifactId>aegis-launcher</artifactId>
-	<version>0.2</version>
+	<version>0.2.${BUILD_NUMBER}</version>
 	<name>Aegis Launcher</name>
 	<url>https://github.com/Aegis-Gaming/Spoutcraft-Launcher</url>
 	<description></description>
