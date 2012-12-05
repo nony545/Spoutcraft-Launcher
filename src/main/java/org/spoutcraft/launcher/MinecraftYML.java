@@ -1,6 +1,9 @@
 package org.spoutcraft.launcher;
 
 import java.io.File;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import org.bukkit.util.config.Configuration;
 
@@ -53,6 +56,45 @@ public class MinecraftYML {
 		return config.getString("current");
 	}
 
+	public static Set<String> getMinecraftVersions() {
+		return ((Map<String, Map<String, String>>) config.getProperty("versions")).keySet();
+	}
+
+	public static Set<String> getCachedMinecraftVersions() {
+		Set<String> minecraftVersions = new HashSet<String>();
+		for (String filename : GameUpdater.cacheDir.list()) {
+			if (!filename.startsWith("minecraft_"))
+				continue;
+			minecraftVersions.add(filename.split("_|.jar")[1]);
+		}
+		return minecraftVersions;
+	}
+
+	public static String getLatestCachedMinecraft() {
+		String latestVersion = "0";
+		for (String nextVersion : getCachedMinecraftVersions()) {
+			if (compareVersions(latestVersion, nextVersion) < 0)
+				latestVersion = nextVersion;
+		}
+		return latestVersion == "0" ? null : latestVersion;
+	}
+
+	public static int compareVersions(String version1, String version2) {
+		String[] vals1 = version1.split("\\.");
+		String[] vals2 = version2.split("\\.");
+		int i=0;
+		while(i<vals1.length&&i<vals2.length&&vals1[i].equals(vals2[i])) {
+		  i++;
+		}
+
+		if (i<vals1.length&&i<vals2.length) {
+		    int diff = new Integer(vals1[i]).compareTo(new Integer(vals2[i]));
+		    return diff<0?-1:diff==0?0:1;
+		}
+
+		return vals1.length<vals2.length?-1:vals1.length==vals2.length?0:1;
+	}
+
 	public static void updateMinecraftYMLCache() {
 		if (!updated || !getConfigFile().exists()) {
 			synchronized (key) {
@@ -65,7 +107,7 @@ public class MinecraftYML {
 					}
 				}
 
-				if (YmlUtils.downloadYmlFile(MINECRAFT_YML, "http://files.aegisgaming.org/Technic/minecraft.yml", getConfigFile())) {
+				if (YmlUtils.downloadYmlFile(MINECRAFT_YML, "http://technic.freeworldsgaming.com/minecraft.yml", getConfigFile())) {
 					// GameUpdater.copy(getConfigFile(), output)
 					config = null;
 					Configuration config = getConfig();
