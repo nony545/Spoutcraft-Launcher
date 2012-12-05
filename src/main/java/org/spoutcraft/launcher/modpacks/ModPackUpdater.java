@@ -116,7 +116,7 @@ public class ModPackUpdater extends GameUpdater {
 				return download.isSuccess();
 			}
 		} catch (MalformedURLException e) {	
-            Util.log("Cannot download the mod '%s'. Does the exact filename exist on the mirror?", "mods/" + name + "/" + filename);
+			Util.log("Cannot download the mod '%s'. Does the exact filename exist on the mirror?", "mods/" + name + "/" + filename);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
