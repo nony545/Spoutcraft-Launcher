@@ -50,14 +50,15 @@ build
 dist
 nbproject
 build.xml
+nbactions.xml
 
 # IntelliJ IDEA files #
 #######################
 .idea
 *.jpage
 /src/main/java/Test.java
-/techniclauncher
+/aegislauncher
 /launcher.properties
 /modpack.yml
 /src/main/java/org/spoutcraft/launcher/gui/widget/CustomComboBoxDemo.java
-/.techniclauncher
+/.aegislauncher
