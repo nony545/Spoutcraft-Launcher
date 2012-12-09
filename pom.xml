@@ -167,15 +167,16 @@
 							<goal>shade</goal>
 						</goals>
 						<configuration>
-						  <minimizeJar>true</minimizeJar>
+						  <minimizeJar>false</minimizeJar>
 							<artifactSet>
 								<includes>
 									<include>commons-codec:commons-codec</include>
+									<include>commons-logging:commons-logging</include>
 									<include>org.yaml:snakeyaml</include>
 									<include>com.beust:jcommander</include>
 									<include>org.apache.httpcomponents:httpclient</include>
 									<include>org.apache.httpcomponents:httpcore</include>
-									<include>commons-logging:commons-logging</include>
+									
 								</includes>
 							</artifactSet>
 						</configuration>
