@@ -2,13 +2,11 @@ package org.spoutcraft.launcher.gui;
 
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.Font;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
-import javax.swing.JSeparator;
 
 import me.unleashurgeek.util.Fonts;
 
@@ -16,8 +14,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.spoutcraft.launcher.GameUpdater;
-import org.spoutcraft.launcher.Util;
 import org.spoutcraft.launcher.modpacks.ModPackYML;
 
 public class NewsPane extends Container {

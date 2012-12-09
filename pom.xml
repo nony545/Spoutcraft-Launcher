@@ -168,6 +168,7 @@
 									<include>org.yaml:snakeyaml</include>
 									<include>com.beust:jcommander</include>
 									<include>org.apache.httpcomponents:httpclient</include>
+									<include>org.apache.httpcomponents:httpcore</include>
 								</includes>
 							</artifactSet>
 						</configuration>
