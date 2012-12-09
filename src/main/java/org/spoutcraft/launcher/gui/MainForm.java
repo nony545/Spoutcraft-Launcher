@@ -112,8 +112,7 @@ public class MainForm extends JFrame implements ActionListener, MouseListener, D
 		public static String pass = null;
 		
 		public static final ArrayList<String> newsTitleArray = new ArrayList<String>();
-		
-		JLabel label = new JLabel("I AM A DERP");		
+			
 		public HashMap<String, UserPasswordInformation> usernames = new HashMap<String, UserPasswordInformation>();
 		
 		public MainForm()
@@ -186,9 +185,6 @@ public class MainForm extends JFrame implements ActionListener, MouseListener, D
 			getOptionsButton().addActionListener(this);
 			getOptionsButton().setEnabled(false);
 			
-			label.setFont(fonts.minecraft);
-			label.setBounds(805, 5, 100, 15);
-			
 			NewsPane newsPane = new NewsPane(this);
 			newsPane.setBounds(615, 200, 948, 646);
 			
@@ -199,7 +195,6 @@ public class MainForm extends JFrame implements ActionListener, MouseListener, D
 			mainContentPane.add(getLoginButton());
 			mainContentPane.add(getProgressBar());
 			mainContentPane.add(getOptionsButton());
-			mainContentPane.add(label);
 			mainContentPane.add(newsPane);
 			
 			mainContentPane.add(getModLeft());
@@ -329,8 +324,6 @@ public class MainForm extends JFrame implements ActionListener, MouseListener, D
 								String username = user;
 								if (dis.readBoolean())
 									username = dis.readUTF();
-								if (i == 1)
-									label.setText(username);
 							}
 							usernames.put(user, new UserPasswordInformation(password));
 						}
