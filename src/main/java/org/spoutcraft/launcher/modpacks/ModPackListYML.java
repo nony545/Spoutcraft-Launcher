@@ -24,40 +24,42 @@ import org.spoutcraft.launcher.YmlUtils;
 
 public class ModPackListYML {
 
-	public static final File										ORIGINAL_PROPERTIES			= new File(PlatformUtils.getWorkingDirectory(), "launcher.properties");
-	private static final String									RESOURCES_PATH					= "resources";
-	private static final String									ICON_ICO								= "icon.ico";
-	private static final String									ICON_ICNS								= "icon.icns";
-	private static final String									ICON_PNG								= "icon.png";
-	private static final String									FAVICON_PNG							= "favicon.png";
-	private static final String									LOGO_PNG								= "mod_select.png";
-	private static final String									BACKGROUND_JPG			= "background.png";
-	private static final String									MODPACKS_YML						= "modpacks.yml";
+	public  static final File 	ORIGINAL_PROPERTIES					= new File(PlatformUtils.getWorkingDirectory(), "launcher.properties");
+	private static final String	RESOURCES_PATH						= "resources";
+	
+	private static final String	ICON_ICNS							= "icon.icns";
+	private static final String ICON_PNG							= "icon.png";
+	
+	private static final String	FAVICON_PNG							= "favicon.png";
+	private static final String	LOGO_PNG							= "mod_select.png";
+	private static final String	BACKGROUND_PNG						= "background.png";
+	private static final String	MODPACKS_YML						= "modpacks.yml";
+	private static final String CONFIG_YML                          = "config.yml";
 
-	private static final List<String>						RESOURCES								= new LinkedList();
-	private static final File										MODPACKS_YML_FILE				= new File(GameUpdater.workDir, MODPACKS_YML);
-	private static final Object									key											= new Object();
+	private static final List<String> RESOURCES         = new LinkedList<String>();
+	private static final File 		  MODPACKS_YML_FILE	= new File(GameUpdater.workDir, MODPACKS_YML);
+	private static final Object		  key				= new Object();
 
-	public static final Map<String, String>			modpackMap;
-	public static final Map<String, ImageIcon>	modpackLogoList					= new HashMap<String, ImageIcon>();
+	public static final Map<String, String>		modpackMap;
+	public static final Map<String, ImageIcon>	modpackLogoList	= new HashMap<String, ImageIcon>();
 
-	private static volatile boolean							updated									= false;
+	private static volatile boolean	updated	= false;
 
-	public static String												currentModPack					= null;
-	public static String												currentModPackLabel			= null;
-	public static File													currentModPackDirectory	= null;
+	public static String currentModPack				= null;
+	public static String currentModPackLabel 		= null;
+	public static File   currentModPackDirectory	= null;
 
-	public static Image													favIcon									= null;
-	public static Image													icon										= null;
-	public static Image													logo										= null;
+	public static Image	favIcon	= null;
+	public static Image	icon	= null;
+	public static Image logo	= null;
 
-	private static Configuration								config									= null;
-	private static File													configFile							= null;
+	private static Configuration config		= null;
 
 	static {
 		RESOURCES.add(FAVICON_PNG);
 		RESOURCES.add(LOGO_PNG);
-		RESOURCES.add(BACKGROUND_JPG);
+		RESOURCES.add(BACKGROUND_PNG);
+		RESOURCES.add(CONFIG_YML);
 		RESOURCES.add(getIconName());
 		modpackMap = getModPacks();
 	}
@@ -106,6 +108,7 @@ public class ModPackListYML {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	private static Map<String, String> getModPacks() {
 		return (Map<String, String>) getConfig().getProperty("modpacks");
 	}

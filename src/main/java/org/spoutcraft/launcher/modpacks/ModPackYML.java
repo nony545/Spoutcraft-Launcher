@@ -26,6 +26,12 @@ public class ModPackYML {
 		config.load();
 		return config;
 	}
+	
+	public static Configuration getModPackConfigYML() {
+		Configuration config = new Configuration(new File(getModPackConfig()));
+		config.load();
+		return config;
+	}
 
 	public static void updateModPackYML() {
 		updateModPackYML(false);
@@ -90,6 +96,10 @@ public class ModPackYML {
 	public static String getModPackBackground() {
 		return new File(ModPackListYML.currentModPackDirectory, "resources" + File.separator + "background.png").getAbsolutePath();
 	}
+	
+	public static String getModPackConfig() {
+		return new File(ModPackListYML.currentModPackDirectory, "resources" + File.separator + "config.yml").getAbsolutePath();
+	}
 
 	public static String[] getModpackBuilds() {
 		Configuration config = getModPackYML();
@@ -116,5 +126,13 @@ public class ModPackYML {
 			return results;
 		}
 		return null;
+	}
+	
+	public static String getNewsColor() {
+		Configuration config = getModPackConfigYML();
+		if (config.getString("newsTextColor") == null)
+			return "FFFFFF";
+		else
+			return config.getString("newsTextColor");
 	}
 }

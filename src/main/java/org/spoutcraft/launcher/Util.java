@@ -29,6 +29,10 @@ public class Util {
 		java.util.Collections.sort(list);
 		return list;
 	}
+	
+	public static void log(String formatString) {
+		Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).warning(formatString);
+	}
 
 	public static void log(String formatString, Object... params) {
 		Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).warning(String.format(formatString, params));

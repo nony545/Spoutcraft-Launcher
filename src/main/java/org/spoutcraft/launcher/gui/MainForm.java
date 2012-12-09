@@ -10,11 +10,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -39,7 +41,13 @@ import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.border.EmptyBorder;
 
+import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.spoutcraft.launcher.GameUpdater;
 import org.spoutcraft.launcher.LibrariesYML;
 import org.spoutcraft.launcher.MD5Utils;
@@ -103,8 +111,9 @@ public class MainForm extends JFrame implements ActionListener, MouseListener, D
 		private int	success = LauncherFrame.ERROR_IN_LAUNCH;
 		public static String pass = null;
 		
-		JLabel label = new JLabel("I AM A DERP");
+		public static final ArrayList<String> newsTitleArray = new ArrayList<String>();
 		
+		JLabel label = new JLabel("I AM A DERP");		
 		public HashMap<String, UserPasswordInformation> usernames = new HashMap<String, UserPasswordInformation>();
 		
 		public MainForm()
@@ -114,12 +123,6 @@ public class MainForm extends JFrame implements ActionListener, MouseListener, D
 			MainForm.updateDialog = new UpdateDialog(this);
 			gameUpdater.setListener(this);
 			fonts = new Fonts();
-			
-			try {
-				//latestNews = PageReader.getPage("http://lostservers.dyndns.org:8080/Launcher/news/index.php");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
 			
 			// Sets the Size of the window
 			Dimension monitorSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -174,7 +177,7 @@ public class MainForm extends JFrame implements ActionListener, MouseListener, D
 			
 			//----------------------Progress Bar----------------------------------
 			setProgressBar(new ProgressBar());
-			getProgressBar().setBounds(58, 555, 430, 26);
+			getProgressBar().setBounds(51, 555, 430, 26);
 			
 			//---------------------------Options----------------------------------
 			getOptionsButton().setLocation(504, 555);
@@ -186,6 +189,9 @@ public class MainForm extends JFrame implements ActionListener, MouseListener, D
 			label.setFont(fonts.minecraft);
 			label.setBounds(805, 5, 100, 15);
 			
+			NewsPane newsPane = new NewsPane(this);
+			newsPane.setBounds(615, 200, 948, 646);
+			
 			// Add the Components to the ContentPane
 			
 			mainContentPane.add(closeButton);
@@ -194,6 +200,7 @@ public class MainForm extends JFrame implements ActionListener, MouseListener, D
 			mainContentPane.add(getProgressBar());
 			mainContentPane.add(getOptionsButton());
 			mainContentPane.add(label);
+			mainContentPane.add(newsPane);
 			
 			mainContentPane.add(getModLeft());
 			mainContentPane.add(getModRight());
