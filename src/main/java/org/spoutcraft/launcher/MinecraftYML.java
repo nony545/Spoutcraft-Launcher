@@ -63,6 +63,7 @@ public class MinecraftYML {
 	public static Set<String> getCachedMinecraftVersions() {
 		Set<String> minecraftVersions = new HashSet<String>();
 		for (String filename : GameUpdater.cacheDir.list()) {
+			Util.log(filename);
 			if (!filename.startsWith("minecraft_"))
 				continue;
 			minecraftVersions.add(filename.split("_|.jar")[1]);
@@ -73,13 +74,17 @@ public class MinecraftYML {
 	public static String getLatestCachedMinecraft() {
 		String latestVersion = "0";
 		for (String nextVersion : getCachedMinecraftVersions()) {
-			if (compareVersions(latestVersion, nextVersion) < 0)
+			Util.log(nextVersion);
+			if (compareVersions(latestVersion, nextVersion) != 0)
 				latestVersion = nextVersion;
 		}
+		//Util.log(latestVersion);
 		return latestVersion == "0" ? null : latestVersion;
 	}
 
 	public static int compareVersions(String version1, String version2) {
+		Util.log(version1);
+		//Util.log(version2);
 		String[] vals1 = version1.split("\\.");
 		String[] vals2 = version2.split("\\.");
 		int i=0;
