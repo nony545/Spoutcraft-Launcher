@@ -27,9 +27,11 @@ public class NewsPane extends Container {
 		this.mainForm = mainForm;
 		
 		this.createNews("http://www.aegisgaming.org/home/m/6918568/rss/true.rss");
-		
+		if (!newsTitleList.isEmpty())
 		for (int i = 0; i < 8; i++)
 		{
+			if (i >= newsTitleList.size())
+				return;
 			JLabel testLine = new HyperlinkJLabel(newsTitleList.get(i), newsLinkList.get(i));
 			testLine.setForeground(Color.decode("0x" + ModPackYML.getNewsColor()));
 			testLine.setFont(MainForm.fonts.minecraft);

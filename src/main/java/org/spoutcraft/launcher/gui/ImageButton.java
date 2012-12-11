@@ -3,6 +3,7 @@ package org.spoutcraft.launcher.gui;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.io.IOException;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
@@ -43,7 +44,15 @@ public class ImageButton extends JButton {
 	}
 	
 	public ImageButton(ImageIcon modPackLogo) {
-		this.image = modPackLogo.getImage();
+		if (modPackLogo != null)
+			this.image = modPackLogo.getImage();
+		else
+			try {
+				image = ImageIO.read(getClass().getResource("/org/spoutcraft/launcher/background/no_mod.png"));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		if (image != null) this.setSize(new Dimension(image.getWidth(this), image.getHeight(this)));
 		setOptions();
 	}
