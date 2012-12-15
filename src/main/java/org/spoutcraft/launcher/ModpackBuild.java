@@ -91,14 +91,17 @@ public class ModpackBuild {
 		String latest = config.getString("latest", null);
 		String recommended = config.getString("recommended", null);
 		String selected = SettingsUtil.getSelectedBuild();
-
 		String buildName = selected;
+		
+		Util.log(selected);
+		
 		if (SettingsUtil.isRecommendedBuild()) {
 			buildName = recommended;
 		} else if (SettingsUtil.isDevelopmentBuild()) {
 			buildName = latest;
 		}
-
+		Util.log(buildName);
+		
 		Map<String, Object> build = (Map<String, Object>) builds.get(buildName);
 		Map<String, Object> libs = (Map<String, Object>) build.get("libraries");
 		Map<String, Object> mods = (Map<String, Object>) build.get("mods");

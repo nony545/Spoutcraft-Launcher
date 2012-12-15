@@ -42,9 +42,9 @@ public class ModPackYML {
 	public static void updateModPackConfigYML(boolean doUpdate) {
 		if (doUpdate || !updated) {
 			synchronized (key) {
-				YmlUtils.downloadYmlFile(ModPackListYML.currentModPack +"/resources/" + "config.yml", FALLBACK_URL, getModPackYMLFile());
+				YmlUtils.downloadYmlFile(ModPackListYML.currentModPack +"/resources/" + "config.yml", FALLBACK_URL, new File(getModPackConfig()));
 
-				Configuration config = new Configuration(getModPackYMLFile());
+				Configuration config = new Configuration(new File(getModPackConfig()));
 				config.load();
 				config.setProperty("newsTextColor", "FFFFFF");
 				config.save();
