@@ -98,7 +98,8 @@ public class MD5Utils {
 			String md5 = scanner.next().toLowerCase();
 			String path = scanner.next().replace("\r", "").replace('/', '\\');
 			md5Map.put(path, md5);
-			scanner.nextLine();
+			if  (scanner.hasNext())
+				scanner.nextLine();
 		}
 	}
 

@@ -140,6 +140,7 @@ public class ModPackListYML {
 		currentModPackDirectory.mkdirs();
 
 		ModPackYML.updateModPackYML(true);
+		ModPackYML.updateModPackConfigYML(true);
 
 		return true;
 	}

@@ -115,6 +115,8 @@ public class MainForm extends JFrame implements ActionListener, MouseListener, D
 			
 		public HashMap<String, UserPasswordInformation> usernames = new HashMap<String, UserPasswordInformation>();
 		
+		NewsPane newsPane = null;
+		
 		public MainForm()
 		{
 			loadLauncherData();
@@ -185,7 +187,7 @@ public class MainForm extends JFrame implements ActionListener, MouseListener, D
 			getOptionsButton().addActionListener(this);
 			getOptionsButton().setEnabled(false);
 			
-			NewsPane newsPane = new NewsPane(this);
+			newsPane = new NewsPane(this);
 			newsPane.setBounds(615, 200, 948, 646);
 			
 			// Add the Components to the ContentPane
@@ -252,8 +254,8 @@ public class MainForm extends JFrame implements ActionListener, MouseListener, D
 						options.modPackList = ModPackListYML.modpackMap;
 						options.setVisible(false);
 					}
-					
-					System.out.println(ModPackListYML.currentModPack);
+					//ModPackYML.updateModPackConfigYML();
+					NewsPane.ChangeColor(Color.decode("0x" + ModPackYML.getNewsColor()));
 					getLoginButton().setEnabled(true);
 					getOptionsButton().setEnabled(true);
 					mainContentPane.image = Toolkit.getDefaultToolkit().getImage(ModPackYML.getModPackBackground());
@@ -274,11 +276,6 @@ public class MainForm extends JFrame implements ActionListener, MouseListener, D
 				}
 			};
 			updateThread.execute();
-		}
-		
-		public void setModLoaderEnabled() {
-			File modLoaderConfig = new File(GameUpdater.modconfigsDir, "ModLoader.cfg");
-			boolean modLoaderExists = modLoaderConfig.exists();
 		}
 		
 		private Cipher getCipher(int mode, String password) throws Exception {

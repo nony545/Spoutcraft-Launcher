@@ -20,8 +20,11 @@ public class NewsPane extends Container {
 	
 	public final MainForm mainForm;
 	
-	public static ArrayList<String> newsTitleList = new ArrayList<String>(); 
-	public static ArrayList<String> newsLinkList  = new ArrayList<String>(); 
+	private ArrayList<String> newsTitleList = new ArrayList<String>(); 
+	private ArrayList<String> newsLinkList  = new ArrayList<String>(); 
+	
+	public static ArrayList<JLabel> newsTitles = new ArrayList<JLabel>();
+	public static ArrayList<JLabel> newsSeperators   = new ArrayList<JLabel>();
 	
 	public NewsPane(MainForm mainForm) {
 		this.mainForm = mainForm;
@@ -36,6 +39,7 @@ public class NewsPane extends Container {
 			testLine.setForeground(Color.decode("0x" + ModPackYML.getNewsColor()));
 			testLine.setFont(MainForm.fonts.minecraft);
 			testLine.setBounds(this.getX() + 15, ((i+1)*31), 250, 22);
+			newsTitles.add(testLine);
 			
 			//JLabel separator = new JLabel("_________________");
 			JLabel separator = new JLabel("____", JLabel.CENTER);
@@ -43,8 +47,10 @@ public class NewsPane extends Container {
 			separator.setVerticalTextPosition(JLabel.BOTTOM);
 			
 			separator.setFont(Fonts.getFont("minecraft", 22));
-			separator.setForeground(Color.white);
+			separator.setForeground(Color.decode("0x" + ModPackYML.getNewsColor()));
 			separator.setBounds(getX(), 36 + (i*31), 250, 22);
+			newsSeperators.add(separator);
+			
 			this.add(testLine);
 			this.add(separator);
 		}
@@ -54,8 +60,21 @@ public class NewsPane extends Container {
 		moreNews.setFont(MainForm.fonts.minecraft);
 		moreNews.setBounds(this.getX() + 15, 279, 250, 22);
 		this.add(moreNews);
+		newsTitles.add(moreNews);
 	}
 	
+	public static void ChangeColor(Color color)
+	{
+		for (JLabel label : newsTitles)
+		{
+			label.setForeground(color);
+		}
+		
+		for (JLabel label : newsSeperators)
+		{
+			label.setForeground(color);
+		}
+	}	
 	
 	public void createNews(String url) {
 		HttpClient client = new DefaultHttpClient();
@@ -90,4 +109,6 @@ public class NewsPane extends Container {
 			e.printStackTrace();
 		}
 	}
+	
+	
 }

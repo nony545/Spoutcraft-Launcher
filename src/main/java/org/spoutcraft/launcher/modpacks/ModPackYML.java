@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.bukkit.util.config.Configuration;
 import org.spoutcraft.launcher.Main;
+import org.spoutcraft.launcher.Util;
 import org.spoutcraft.launcher.YmlUtils;
 
 public class ModPackYML {
@@ -28,9 +29,29 @@ public class ModPackYML {
 	}
 	
 	public static Configuration getModPackConfigYML() {
+		updateModPackConfigYML();
 		Configuration config = new Configuration(new File(getModPackConfig()));
 		config.load();
 		return config;
+	}
+	
+	public static void updateModPackConfigYML() {
+		updateModPackConfigYML(false);
+	}
+
+	public static void updateModPackConfigYML(boolean doUpdate) {
+		if (doUpdate || !updated) {
+			synchronized (key) {
+				YmlUtils.downloadYmlFile(ModPackListYML.currentModPack +"/resources/" + "config.yml", FALLBACK_URL, getModPackYMLFile());
+
+				Configuration config = new Configuration(getModPackYMLFile());
+				config.load();
+				config.setProperty("newsTextColor", "FFFFFF");
+				config.save();
+
+				updated = true;
+			}
+		}
 	}
 
 	public static void updateModPackYML() {
@@ -132,6 +153,8 @@ public class ModPackYML {
 		Configuration config = getModPackConfigYML();
 		if (config.getString("newsTextColor") == null)
 			return "FFFFFF";
+		else if (config.getString("newsTextColor").equals("black"))
+			return "000000";
 		else
 			return config.getString("newsTextColor");
 	}
