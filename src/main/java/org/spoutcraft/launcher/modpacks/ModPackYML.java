@@ -12,7 +12,7 @@ import org.spoutcraft.launcher.YmlUtils;
 public class ModPackYML {
 
 	private static final String			MODPACK_YML		= "modpack.yml";
-	private static final String			FALLBACK_URL	= String.format("http://files.aegisgaming.org/Technic/%s", MODPACK_YML);
+	private static final String			FALLBACK_URL	= String.format("http://mcftb.synergy-community.com/SynergyLauncher/%s", MODPACK_YML);
 
 	private static volatile boolean	updated				= false;
 	private static final Object			key						= new Object();
