@@ -29,7 +29,7 @@ public class ModPackUpdater extends GameUpdater {
 
 	public static final String	defaultModPackName	= "technicssp";
 
-	private static final String	baseFallbackURL			= "http://files.aegisgaming.org/Technic/";
+	private static final String	baseFallbackURL			= "http://mcftb.synergy-community.com/SynergyLauncher/";
 	private static final String	fallbackModsURL			= baseFallbackURL + "mods/";
 
 	public void updateModPackMods() {
