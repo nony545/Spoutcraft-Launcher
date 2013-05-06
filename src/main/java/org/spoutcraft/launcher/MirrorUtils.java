@@ -17,7 +17,7 @@ import org.spoutcraft.launcher.async.DownloadListener;
 
 public class MirrorUtils {
 
-	public static final String[]	MIRRORS_URL	= { "http://files.aegisgaming.org/Technic/mirrors.yml", "https://raw.github.com/Aegis-Gaming/Technic/master/mirrors.yml" };
+	public static final String[]	MIRRORS_URL	= { "http://mcftb.synergy-community.com/SynergyLauncher/mirrors.yml", "http://mcftb.synergy-community.com/SynergyLauncher/mirrors.yml" };
 	public static File						mirrorsYML	= new File(GameUpdater.workDir, "mirrors.yml");
 	private static boolean				updated			= false;
 	private static final Random		rand				= new Random();
