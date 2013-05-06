@@ -1,8 +1,8 @@
 <!--
 	Maven build file for Synergy Launcher
 
-	Copyright (c) 2011 Aegis Gaming <http://www.aegisgaming.org>
-	Aegis Gaming Launcher is licensed under GNU LESSER GENERAL PUBLIC LICENSE Version 3
+	Copyright (c) 2013 Synergy Community <http://Synergy-commuinty.com>
+	Synergy Launcher is licensed under GNU LESSER GENERAL PUBLIC LICENSE Version 3
 -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -33,15 +33,15 @@
 
 	<!-- Source code -->
 	<scm>
-		<developerConnection>scm:git:git@github.com:Aegis-Gaming/Spoutcraft-Launcher.git</developerConnection>
-		<connection>scm:git:git://github.com/Aegis-Gaming/Spoutcraft-Launcher.git</connection>
-		<url>https://github.com/Aegis-Gaming/Spoutcraft-Launcher</url>
+		<developerConnection>scm:git:git://github.com/nony545/Synergy-Launcher.git</developerConnection>
+		<connection>scm:git:git://github.com/nony545/Synergy-Launcher.git</connection>
+		<url>https://github.com/nony545/Synergy-Launcher.git</url>
 	</scm>
 
 	<!-- Continuous integration -->
 	<ciManagement>
 		<system>jenkins</system>
-		<url>http://build.aegisgaming.org/job/Aegis-Launcher/</url>
+		<url>http://</url>
 	</ciManagement>
 
 	<!-- Repository locations -->
