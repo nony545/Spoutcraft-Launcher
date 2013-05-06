@@ -57,7 +57,7 @@ nbactions.xml
 .idea
 *.jpage
 /src/main/java/Test.java
-/aegislauncher
+/synergylauncher
 /launcher.properties
 /modpack.yml
 /src/main/java/org/spoutcraft/launcher/gui/widget/CustomComboBoxDemo.java
