@@ -36,7 +36,7 @@ public class TumblerFeedParsingWorker extends SwingWorker<Object, Object> implem
 	protected Object doInBackground() {
 		URL url = null;
 		try {
-			url = new URL("http://files.aegisgaming.org/Technic/");
+			url = new URL("http://mcftb.synergy-community.com/SynergyLauncher/");
 
 			if (MirrorUtils.isAddressReachable(url.toString())) {
 				editorPane.setVisible(false);
