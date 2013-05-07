@@ -31,7 +31,7 @@ import javax.swing.JProgressBar;
 
 public class PlatformUtils {
 
-	public static final String	LAUNCHER_DIR	= "aegislauncher";
+	public static final String	LAUNCHER_DIR	= "Synergylauncher";
 	private static File					workDir				= null;
 
 	public static File getWorkingDirectory() {
