@@ -269,7 +269,7 @@ public class MainForm extends JFrame implements ActionListener, MouseListener, D
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					//setTitle(String.format("Aegis Launcher - %s - (%s)", Main.build, ModPackListYML.currentModPackLabel));
+					//setTitle(String.format("Synergy Launcher - %s - (%s)", Main.build, ModPackListYML.currentModPackLabel));
 					options.reloadSettings();
 					MinecraftYML.updateMinecraftYMLCache();
 					//setModLoaderEnabled();
