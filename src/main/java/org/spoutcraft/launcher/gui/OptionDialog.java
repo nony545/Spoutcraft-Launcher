@@ -73,17 +73,17 @@ public class OptionDialog extends JDialog implements ActionListener {
 	 */
 	@SuppressWarnings("unchecked")
 	public OptionDialog() {
-		setTitle("Aegis Launcher Settings");
+		setTitle("Synergy Launcher Settings");
 
 		ButtonGroup group = new ButtonGroup();
 		group.add(devBuilds);
 		group.add(recBuilds);
 		group.add(customBuilds);
 
-		buildInfo.setText("Aegis Launcher Build " + Main.build);
+		buildInfo.setText("Synergy Launcher Build " + Main.build);
 		buildInfo.setOpaque(true);
 		buildInfo.setForeground(Color.DARK_GRAY);
-		buildInfo.setToolTipText("Created by the Technic Team and Redesigned/Optimized by funbob10 for AegisGaming. Licensed under the LGPL. Source code is available at www.github.com/SpoutDev");
+		buildInfo.setToolTipText("Created by the Technic Team and Redesigned/Optimized by nony545 & Ravage for synergy community. Licensed under the LGPL. Source code is available at www.github.com/SpoutDev");
 
 		customBuilds.setToolTipText("Only use if you know what you are doing!");
 		devBuilds.setToolTipText("Development builds are often unstable and buggy. Use at your own risk!");
