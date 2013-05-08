@@ -5,6 +5,6 @@ The goal of this launcher is to provide a one-click method to switch modpacks an
 
 [Synergy Community Web site](http://synergy-community.com/)
 
-Get the latest builds of this launcher from our [Launcher Download Site](http://)
+Get the latest builds of this launcher from our [Launcher Download Site](http://www.synergy-community.com/vbdownloads.php?do=download&fileid=21)
 
 --
